@@ -15,6 +15,9 @@ const Formulario = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const [submitted,setSubmitted]=useState("");
+
+
     const handleRegister = (e) => {
         e.preventDefault();
 
@@ -27,16 +30,31 @@ const Formulario = () => {
         };
    
         console.log(data);
+        setSubmitted(true);
 
         setfirstName("");
         setPassword("");
         setConfirmPassword("");
     }
 
+    const formMessage= () => {
+        if(!submitted){
+            return "Bienvenido, porfavor registrese!!"
+        }
+        return "Gracias por registrarse"
+    }
  
     return (
         <div className={styles.general} >
-     
+            <h1>{formMessage}</h1>
+            <h2>
+                {
+                    submitted ?
+                        "GENIAL"
+                        :
+                        "ESPERANDO REGISTRO"
+                }
+            </h2>
          
             <form action="#" onSubmit={handleRegister}>
 
@@ -49,6 +67,12 @@ const Formulario = () => {
                         value={firstName}
                         onChange={(e) => setfirstName(e.target.value) } 
                     />
+                    {
+                        (firstName.length<2&& firstName.length>0) &&
+                        <Fragment>
+                            <p>El nombre debe tener 2 caracteres como minimo</p>
+                        </Fragment>
+                    }
 
                 </div>
 
@@ -61,6 +85,12 @@ const Formulario = () => {
                         value={lastName}
                         onChange={(e) => setlastName(e.target.value)}
                     />
+                    {
+                        (lastName.length<2&& lastName.length>0) &&
+                        <Fragment>
+                            <p>El apellido debe tener 2 caracteres como minimo</p>
+                        </Fragment>
+                    }
 
                 </div>
                 <div className={styles.formCard}>
@@ -72,6 +102,12 @@ const Formulario = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                    {
+                        (email.length < 5 && email.length > 0) &&
+                        <Fragment>
+                            <p>El email debe tener 5 caracteres como minimo</p>
+                        </Fragment>
+                    }
 
                 </div>
 
@@ -84,6 +120,12 @@ const Formulario = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    {
+                        (password.length < 8 && password.length > 0) &&
+                        <Fragment>
+                            <p>La contraseña debe tener 8 caracteres como minimo</p>
+                        </Fragment>
+                    }
                 </div>
                 <div className={styles.formCard}>
                     <label htmlFor="confirmPasswordInput">Confirm Password</label>
